@@ -37,4 +37,10 @@ public class BishopBlackTest {
         boolean expected = true;
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void findBy(){
+        assertThat(BishopBlack.findBy(2,0), is(C1));
+    }
+
 }

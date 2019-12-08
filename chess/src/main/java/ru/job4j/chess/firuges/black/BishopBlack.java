@@ -4,7 +4,8 @@ import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 /**
- * @author Petr Arsentev (parsentev@yandex.ru)
+ * Каркас шахматной доски[#193330]
+ *
  * @version $Id$
  * @since 0.1
  */
@@ -36,29 +37,12 @@ public class BishopBlack implements Figure {
         }
         int size = Math.abs(dest.x - source.x);
         Cell[] steps = new Cell[size];
-        int deltaX =  source.x;
+        int deltaX = source.x;
         int deltaY = source.y;
         for (int index = 0; index < size; index++) {
-            Cell[] cells = Cell.values();
-            if (deltaX > dest.x && deltaY > dest.y) {
-                deltaX--;
-                deltaY--;
-            } else if (deltaX < dest.x && deltaY > dest.y) {
-                deltaX++;
-                deltaY--;
-            } else if (deltaX < dest.x && deltaY < dest.y) {
-                deltaX++;
-                deltaY++;
-            } else {
-                deltaX--;
-                deltaY++;
-            }
-            for (Cell cell : cells) {
-                if (cell.x == deltaX && cell.y == deltaY) {
-                    steps[index] = cell;
-                    break;
-                }
-            }
+            deltaX = deltaX + Integer.compare(dest.x,source.x);
+            deltaY = deltaY + Integer.compare(dest.y,source.y);
+            steps[index] = findBy(deltaX,deltaY);
         }
         return steps;
     }
@@ -83,5 +67,23 @@ public class BishopBlack implements Figure {
     @Override
     public Figure copy(Cell dest) {
         return new BishopBlack(dest);
+    }
+
+    /**
+     * Поиск клетки по координатам.
+     *
+     * @param x координат.
+     * @param y координат.
+     * @return Cell клетка.
+     */
+    public static Cell findBy(int x, int y){
+        Cell[] cells = Cell.values();
+        Cell[] step = new Cell[1];
+        for (Cell cell : cells) {
+            if (cell.x == x && cell.y == y){
+                step[0] = cell;
+            }
+        }
+        return step[0];
     }
 }
